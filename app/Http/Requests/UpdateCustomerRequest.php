@@ -34,6 +34,7 @@ class UpdateCustomerRequest extends FormRequest
                 'address' => ['required'],
                 'state' => ['required'],
                 'postalCode' => ['required'],
+                'phone' => ['required'],
             ];
         }
         else
@@ -45,6 +46,7 @@ class UpdateCustomerRequest extends FormRequest
                 'address' => ['sometimes', 'required'],
                 'state' => ['sometimes', 'required'],
                 'postalCode' => ['sometimes', 'required'],
+                'phone' => ['sometimes', 'required'],
             ];
         }
         

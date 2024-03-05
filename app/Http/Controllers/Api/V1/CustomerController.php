@@ -22,7 +22,7 @@ class CustomerController extends Controller
     {
         $filter = new CustomersFilter();
         $filterItems = $filter->transform($request);
-
+        $filterItems += ['status' => 2];
         $includeInvoices = $request->query('includeInvoices');
         $customers = Customer::where($filterItems);
 
@@ -103,5 +103,20 @@ class CustomerController extends Controller
     public function destroy(Customer $customer)
     {
         //
+    }
+
+    public function prospects(Request $request)
+    {
+        $filter = new CustomersFilter();
+        $filterItems = $filter->transform($request);
+        $filterItems += ['status' => 1];
+        $includeInvoices = $request->query('includeInvoices');
+        $customers = Customer::where($filterItems);
+        if($includeInvoices)
+        {
+            $customers = $customers->with('invoices');
+        }
+
+        return new CustomerCollection($customers->paginate()->appends($request->query()));
     }
 }

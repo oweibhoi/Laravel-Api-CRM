@@ -15,6 +15,7 @@ class CustomerFactory extends Factory
     {
         $type = $this->faker->randomElement(["B", "I"]);
         $name = $type === 'B' ? $this->faker->company() : $this->faker->name();
+        $status = $this->faker->randomElement(["0", "1", "2"]);
         return [
             'name' => $name,
             'type' => $type,
@@ -22,6 +23,8 @@ class CustomerFactory extends Factory
             'address' => $this->faker->address(),
             'state' => $this->faker->state(),
             'postal_code' => $this->faker->postCode(),
+            'phone' => $this->faker->phoneNumber(),
+            'status' => $status
         ];
     }
 }

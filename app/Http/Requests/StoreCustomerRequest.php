@@ -31,6 +31,8 @@ class StoreCustomerRequest extends FormRequest
             'address' => ['required'],
             'state' => ['required'],
             'postalCode' => ['required'],
+            'phone' => ['required'],
+            'status' => ['required'],
         ];
     }
 
