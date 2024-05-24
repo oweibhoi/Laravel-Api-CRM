@@ -27,6 +27,7 @@ Route::group(['prefix' => 'v1', 'middleware' => 'auth:sanctum'], function () {
     Route::post('invoices/bulk', [InvoiceController::class, 'bulkstore']);
     Route::post('logout', [LoginContoller::class, 'logout']);
     Route::get('prospects', [CustomerController::class, 'prospects']);
+    Route::put('customer-status/{id}', [CustomerController::class, 'status']);
 });
 Route::group(['prefix' => 'v1'], function () {
     Route::post('login', [LoginContoller::class, 'login']);

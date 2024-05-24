@@ -105,6 +105,17 @@ class CustomerController extends Controller
         //
     }
 
+    public function status(Request $request, $id) 
+    {
+        // Find the item by ID
+        $item = Customer::findOrFail($id);
+
+        // Update the specific field
+        $item->status = $request->input('status');
+        $item->save();
+        return response()->json(['success' => true]);
+    }
+
     public function prospects(Request $request)
     {
         $filter = new CustomersFilter();
