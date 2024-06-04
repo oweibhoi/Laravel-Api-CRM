@@ -28,9 +28,9 @@ class UpdateCustomerRequest extends FormRequest
         if($this->method() === 'PUT')
         {
             return [
-                'name' => ['required', 'unique:customers'],
+                'name' => ['required'],
                 'type' => ['required', Rule::in(['I', 'i', 'B', 'b'])],
-                'email' => ['required', 'unique:customers'],
+                'email' => ['required'],
                 'address' => ['required'],
                 'state' => ['required'],
                 'postalCode' => ['required'],
