@@ -25,11 +25,12 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::group(['prefix' => 'v1', 'middleware' => 'auth:sanctum'], function () {
     Route::apiResource('customers', CustomerController::class);
     Route::apiResource('invoices', InvoiceController::class);
-    Route::apiResource('settingstodos', SettingsTodosController::class);
+    Route::apiResource('settings-todos', SettingsTodosController::class);
     Route::post('invoices/bulk', [InvoiceController::class, 'bulkstore']);
     Route::post('logout', [LoginContoller::class, 'logout']);
     Route::get('prospects', [CustomerController::class, 'prospects']);
     Route::put('customer-status/{id}', [CustomerController::class, 'status']);
+    Route::put('todos-status/{id}', [SettingsTodosController::class, 'status']);
 });
 Route::group(['prefix' => 'v1'], function () {
     Route::post('login', [LoginContoller::class, 'login']);

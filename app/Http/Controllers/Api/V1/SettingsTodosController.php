@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\V1;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Filters\V1\SettingsTodosFilter;
+use App\Http\Requests\StoreSettingsTodosRequest;
 use App\Models\SettingsTodos;
 use App\Http\Resources\V1\SettingsTodosCollection;
 
@@ -19,7 +20,7 @@ class SettingsTodosController extends Controller
     {
         $filter = new SettingsTodosFilter();
         $filterItems = $filter->transform($request);
-        $filterItems += ['status' => 2];
+        $filterItems += ['status' => 1];
         $settingsTodos = SettingsTodos::where($filterItems);
 
         return new SettingsTodosCollection($settingsTodos->paginate()->appends($request->query()));
@@ -41,9 +42,10 @@ class SettingsTodosController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreSettingsTodosRequest $request)
     {
-        //
+        $todosModel = new SettingsTodos();
+        $todosModel->create($request->toArray());
     }
 
     /**
@@ -89,5 +91,16 @@ class SettingsTodosController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function status(Request $request, $id) 
+    {
+        // Find the item by ID
+        $item = SettingsTodos::findOrFail($id);
+
+        // Update the specific field
+        $item->status = $request->input('status');
+        $item->save();
+        return response()->json(['success' => true]);
     }
 }
