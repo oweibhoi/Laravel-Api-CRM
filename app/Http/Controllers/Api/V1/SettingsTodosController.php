@@ -8,6 +8,7 @@ use App\Filters\V1\SettingsTodosFilter;
 use App\Http\Requests\StoreSettingsTodosRequest;
 use App\Models\SettingsTodos;
 use App\Http\Resources\V1\SettingsTodosCollection;
+use App\Http\Resources\V1\SettingsTodosResource;
 
 class SettingsTodosController extends Controller
 {
@@ -56,7 +57,8 @@ class SettingsTodosController extends Controller
      */
     public function show($id)
     {
-        //
+        $data = SettingsTodos::find($id);
+        return new SettingsTodosResource($data);
     }
 
     /**
@@ -77,9 +79,12 @@ class SettingsTodosController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(StoreSettingsTodosRequest $request)
     {
-        //
+        $todos = SettingsTodos::findOrFail($request->get("id"));
+        $todos->update($request->all());
+        $result = $todos->save();
+        return response()->json(["success" => $result ? true : false]);
     }
 
     /**

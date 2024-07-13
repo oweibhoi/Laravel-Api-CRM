@@ -24,9 +24,16 @@ class StoreSettingsTodosRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-            'name' => ['required', 'unique:settings_todos'],
-            'type' => ['required', Rule::in(['P', 'p', 'C', 'c'])],
-        ];
+        if(in_array($this->method(), ["PUT", "PATCH"])) {
+            return [
+                'name' => ['required'],
+                'type' => ['required', Rule::in(['P', 'p', 'C', 'c'])],
+            ];
+        } else {
+            return [
+                'name' => ['required', 'unique:settings_todos'],
+                'type' => ['required', Rule::in(['P', 'p', 'C', 'c'])],
+            ];
+        }
     }
 }
