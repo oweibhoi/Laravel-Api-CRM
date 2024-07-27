@@ -25,4 +25,9 @@ class Customer extends Model
     {
         return $this->hasMany(Invoice::class, 'customer_id');
     }
+
+    public function todos()
+    {
+        return $this->hasMany(Todos::class, 'customer_id');
+    }
 }

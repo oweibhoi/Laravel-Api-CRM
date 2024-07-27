@@ -14,4 +14,8 @@ class SettingsTodos extends Model
         'type',
         'status'
     ];
+
+    public function todos () {
+        return $this->belongsTo(Todos::class, 'todo_id');
+    }
 }

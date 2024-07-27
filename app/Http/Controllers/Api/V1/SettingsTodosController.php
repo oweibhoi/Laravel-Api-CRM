@@ -9,6 +9,7 @@ use App\Http\Requests\StoreSettingsTodosRequest;
 use App\Models\SettingsTodos;
 use App\Http\Resources\V1\SettingsTodosCollection;
 use App\Http\Resources\V1\SettingsTodosResource;
+use Exception;
 
 class SettingsTodosController extends Controller
 {
@@ -45,8 +46,7 @@ class SettingsTodosController extends Controller
      */
     public function store(StoreSettingsTodosRequest $request)
     {
-        $todosModel = new SettingsTodos();
-        $todosModel->create($request->toArray());
+        return new SettingsTodosResource(SettingsTodos::create($request->all()));
     }
 
     /**
@@ -98,14 +98,21 @@ class SettingsTodosController extends Controller
         //
     }
 
-    public function status(Request $request, $id) 
+    public function status(Request $request, $id)
     {
-        // Find the item by ID
-        $item = SettingsTodos::findOrFail($id);
+        $success = false;
+        try {
+            // Find the item by ID
+            $item = SettingsTodos::findOrFail($id);
 
-        // Update the specific field
-        $item->status = $request->input('status');
-        $item->save();
-        return response()->json(['success' => true]);
+            // Update the specific field
+            $item->status = $request->input('status');
+            $item->save();
+            $success = true;
+        } catch (Exception $e) {
+            $success = false;
+        }
+
+        return response()->json(['success' => $success]);
     }
 }
