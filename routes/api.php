@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\V1\CustomerController;
 use App\Http\Controllers\Api\V1\InvoiceController;
+use App\Http\Controllers\Api\V1\NotesController;
 use App\Http\Controllers\Api\V1\SettingsTodosController;
 use App\Http\Controllers\Api\V1\TodosController;
 use App\Http\Controllers\LoginContoller;
@@ -28,6 +29,7 @@ Route::group(['prefix' => 'v1', 'middleware' => 'auth:sanctum'], function () {
     Route::apiResource('invoices', InvoiceController::class);
     Route::apiResource('settings-todos', SettingsTodosController::class);
     Route::apiResource('todos', TodosController::class);
+    Route::apiResource('notes', NotesController::class);
     Route::post('invoices/bulk', [InvoiceController::class, 'bulkstore']);
     Route::post('logout', [LoginContoller::class, 'logout']);
     Route::get('prospects', [CustomerController::class, 'prospects']);

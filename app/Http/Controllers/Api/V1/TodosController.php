@@ -13,8 +13,8 @@ class TodosController extends Controller
             ->where('settings_todos.status', 1)
             ->where('settings_todos.type', $type)
             ->select('settings_todos.id', 'settings_todos.name', DB::raw('(SELECT id FROM customer_todos WHERE customer_todos.todo_id=settings_todos.id AND customer_todos.customer_id="'.$customer_id.'") as todos_id'))
-            ->paginate();
-        return response()->json($todos);
+            ->get();
+        return response()->json(collect($todos));
     }
 
     public function complete($id = false, $customerID = false)

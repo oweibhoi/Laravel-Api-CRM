@@ -30,4 +30,9 @@ class Customer extends Model
     {
         return $this->hasMany(Todos::class, 'customer_id');
     }
+
+    public function notes()
+    {
+        return $this->hasMany(Notes::class, 'customer_id');
+    }
 }
